@@ -18,3 +18,23 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='blog_images/')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    summary = models.TextField(max_length=300)
+    content = models.TextField()
+    draft = models.BooleanField(default=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

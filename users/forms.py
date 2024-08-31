@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Profile,BlogPost, Category
 
 
 class UserRegisterForm(UserCreationForm):
@@ -19,3 +19,13 @@ class UserRegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'profile_picture', 'address_line1', 'city', 'state', 'pincode', 'user_type']
 
+
+class BlogPostForm(forms.ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = ['title', 'image', 'category', 'summary', 'content', 'draft']
+
+        widgets = {
+            'summary': forms.Textarea(attrs={'rows': 2}),
+            'content': forms.Textarea(attrs={'rows': 5}),
+        }

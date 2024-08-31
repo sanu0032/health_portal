@@ -7,3 +7,28 @@
   Address: {{ profile.address_line1 }}, {{ profile.city }}, {{ profile.state }}
   - {{ profile.pincode }}
 </p>
+<div class="other-page-container">
+    <li><a href="{% url 'home' %}">Home</a></li>  
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{% url 'create_blog_post' %}">Create Blog Post</a></li>
+    <li><a href="{% url 'doctor_blog_list' %}">My Blog Posts</a></li>
+    <li><a href="{% url 'patient_blog_list' %}">Blog Posts</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li> 
+</div>
+
+<style>
+  .other-page-container li {
+  margin-right: 20px; /* Add space between items; adjust as needed */
+}
+  
+  .other-page-container {
+    display: flex; 
+    flex-direction: row; /* Arrange items in a row */
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 10px; /* Remove default margin */
+    position: absolute; /* Position the container absolutely */
+    right: 100px; /* Adjust this value to move the container closer to the right edge */
+    top: 10px; /* Adjust this value to position it vertically below the profile picture */
+  }
+</style>

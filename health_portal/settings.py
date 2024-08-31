@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -120,6 +121,9 @@ STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+# Media files (Uploaded Images, etc.)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -135,3 +139,10 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 # settings.py
 
 LOGIN_URL = '/login/'  # Redirects users to the login page if they try to access a restricted page
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
+
+# Optional settings for debugging
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']

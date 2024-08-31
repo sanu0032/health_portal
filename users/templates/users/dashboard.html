@@ -1,6 +1,14 @@
 <!-- users/templates/users/dashboard.html -->
 <h2>Dashboard</h2>
 <div class="dashboard-container">
+  <div class="other-page-container">
+    <li><a href="{% url 'home' %}">Home</a></li>  
+    <li><a href="{% url 'profile' %}">Profile</a></li>
+    <li><a href="{% url 'create_blog_post' %}">Create Blog Post</a></li>
+    <li><a href="{% url 'doctor_blog_list' %}">My Blog Posts</a></li>
+    <li><a href="{% url 'patient_blog_list' %}">Blog Posts</a></li>
+   
+</div>
   <div class="profile-picture-container">
     <img
       src="{{ profile.profile_picture.url }}"
@@ -26,12 +34,24 @@
     position: relative;
     padding-top: 50px; /* Adjust padding to accommodate profile picture */
   }
-
+  .other-page-container li {
+  margin-right: 20px; /* Add space between items; adjust as needed */
+}
   .profile-picture-container {
     position: absolute;
     top: 0;
     right: 0;
     padding: 10px;
+  }
+  .other-page-container {
+    display: flex; 
+    flex-direction: row; /* Arrange items in a row */
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 10px; /* Remove default margin */
+    position: absolute; /* Position the container absolutely */
+    right: 100px; /* Adjust this value to move the container closer to the right edge */
+    top: 0px; /* Adjust this value to position it vertically below the profile picture */
   }
 
   .profile-picture {

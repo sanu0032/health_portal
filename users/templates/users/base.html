@@ -1,37 +1,18 @@
-<!-- users/templates/users/index.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-      }
-      h1 {
-        text-align: center;
-      }
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-      li {
-        margin: 10px 0;
-      }
-      a {
-        text-decoration: none;
-        color: #007bff;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Welcome to the Health Portal</h1>
-    <ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Health Portal{% endblock %}</title>
+
+    {% block extra_head %}
+    <!-- Additional head elements like meta tags or links can go here -->
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'register' %}">Register</a></li>
             
@@ -48,5 +29,18 @@
         
                 <!-- Add more navigation links as needed -->
             </ul>
-  </body>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Page-specific content will go here -->
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Health Portal. All rights reserved.</p>
+    </footer>
+    {% block extra_scripts %}
+    <!-- Additional scripts can go here -->
+    {% endblock %}
+</body>
 </html>

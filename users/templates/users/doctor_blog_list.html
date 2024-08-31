@@ -1,0 +1,9 @@
+{% extends 'users/base.html' %}
+{% block content %}
+  <h2>My Blog Posts</h2>
+  <ul>
+    {% for post in posts %}
+      <li>{{ post.title }} ({{ post.category }}) - {{ post.draft|yesno:"Draft,Published" }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

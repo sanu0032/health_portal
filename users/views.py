@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm
-from .models import Profile
+from .forms import UserRegisterForm,BlogPostForm
+from .models import Profile,BlogPost, Category
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def home(request):
+    return render(request, 'users/index.html')
 
 def register(request):
     if request.method == 'POST':
@@ -44,7 +49,54 @@ class CustomLoginView(LoginView):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html', {'profile': request.user.profile})
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        profile = None  # Handle this case in your template
+
+    return render(request, 'users/profile.html', {'profile': profile})
 
 def index(request):
     return render(request, 'users/index.html')
+
+
+
+@login_required
+def create_blog_post(request):
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog_post = form.save(commit=False)
+            blog_post.author = request.user
+            blog_post.save()
+            return redirect('doctor_blog_list')
+    else:
+        form = BlogPostForm()
+    return render(request, 'users/create_blog_post.html', {'form': form})
+
+@login_required
+def doctor_blog_list(request):
+    posts = BlogPost.objects.filter(author=request.user)
+    return render(request, 'users/doctor_blog_list.html', {'posts': posts})
+
+def patient_blog_list(request, category_id=None):
+    if category_id:
+        posts = BlogPost.objects.filter(draft=False, category_id=category_id)
+    else:
+        posts = BlogPost.objects.filter(draft=False)
+    
+    for post in posts:
+        words = post.summary.split()
+        if len(words) > 15:
+            post.summary = ' '.join(words[:15]) + '...'
+
+    categories = Category.objects.all()
+    return render(request, 'users/patient_blog_list.html', {'posts': posts, 'categories': categories})
+
+# views.py
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('home') 
